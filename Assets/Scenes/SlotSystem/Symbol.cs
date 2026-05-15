@@ -4,6 +4,6 @@ using UnityEngine;
 public class Symbol : ScriptableObject
 {
     public Sprite image;
-    public int score = 0;
+    public int score = 3;
     
 }
