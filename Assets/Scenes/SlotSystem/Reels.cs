@@ -6,8 +6,9 @@ using UnityEngine;
 public abstract class Reels : ScriptableObject
 {
     [SerializeField] protected int reelsLengh = 20;
-    public abstract Vector2 Get();
-    public abstract List<Symbol>[] GetReels();
+
+    public abstract Vector2Int GetLengh();
+    public abstract List<Symbol>[] GetAllReels();
 
     protected abstract void OnEnable();
 }

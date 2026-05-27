@@ -9,7 +9,7 @@ class ThreeReels : Reels
     [SerializeField] List<Symbol> reels2 = new List<Symbol>(20);
     [SerializeField] List<Symbol> reels3 = new List<Symbol>(20);
 
-    public override List<Symbol>[] GetReels()
+    public override List<Symbol>[] GetAllReels()
     {
         return new List<Symbol>[3]
         {
@@ -17,9 +17,9 @@ class ThreeReels : Reels
         };
     }
 
-    public override Vector2 Get()
+    public override Vector2Int GetLengh()
     {
-        return new Vector2(3, reelsLengh);
+        return new Vector2Int(3, reelsLengh);
     }
 
 
