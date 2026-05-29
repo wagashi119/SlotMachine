@@ -4,12 +4,30 @@ using UnityEngine;
 
 public class SlotScoreManager : MonoBehaviour
 {
-    [SerializeField] SlotRandomSelect slotSelector;
+    [SerializeField] SlotRandomSelect symbolSelector;
     [SerializeField] int totalScore = 0;
     [SerializeField] List<Symbol> matchedSymbols = new List<Symbol>();
 
+    [Header("判定範囲")]
+    [Tooltip("選出位置を中心に、上下へ何段ずつ見るか。3 なら前・選出・後の3段。")]
+    [SerializeField] int verticalLineCount = 3;
+    [Tooltip("選出位置を中心に、評価する横ライン（段）の本数。3 なら上・選出・下の3本。")]
+    [SerializeField] int horizontalLineCount = 3;
+    [Tooltip("揃い成立に必要な最少個数（横は左から連続、縦は列内すべて一致）。")]
+    [SerializeField] int minMatchCount = 3;
+
     public int TotalScore => totalScore;
     public IReadOnlyList<Symbol> MatchedSymbols => matchedSymbols;
+    public int VerticalLineCount => verticalLineCount;
+    public int HorizontalLineCount => horizontalLineCount;
+    public int MinMatchCount => minMatchCount;
+
+    void OnValidate()
+    {
+        minMatchCount = Mathf.Max(2, minMatchCount);
+        horizontalLineCount = Mathf.Max(1, horizontalLineCount);
+        verticalLineCount = Mathf.Max(minMatchCount, verticalLineCount);
+    }
 
     public void OnRolled(int[] _)
     {
@@ -17,65 +35,122 @@ public class SlotScoreManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 選出インデックスとその前後（計3つ）の絵柄を返す。index: 0=前, 1=選出, 2=後
+    /// 横ライン評価用の縦オフセット（例: 3 本なら -1, 0, 1）。
     /// </summary>
-    public Symbol[] GetSymbolsAroundSelection(int reelIndex)
+    public int[] GetHorizontalRowOffsets()
     {
-        var reel = slotSelector.symbols[reelIndex];
-        int center = slotSelector.GetSelectSymbolIndex()[reelIndex];
-        return new[]
-        {
-            GetSymbolAt(reelIndex, center - 1),
-            GetSymbolAt(reelIndex, center),
-            GetSymbolAt(reelIndex, center + 1),
-        };
-    }
-
-    Symbol GetSymbolAt(int reelIndex, int symbolIndex)
-    {
-        int count = slotSelector.symbols[reelIndex].Count;
-        symbolIndex = ((symbolIndex % count) + count) % count;
-        return slotSelector.GetSymbol(new Vector2Int(reelIndex, symbolIndex));
+        return BuildCenteredOffsets(horizontalLineCount);
     }
 
     /// <summary>
-    /// 選出位置からの縦オフセット（-1=前, 0=選出, 1=後）で横一列の絵柄を取得する。
+    /// 1 リール分の縦列（選出位置を中心に verticalLineCount 個）。
     /// </summary>
-    Symbol[] GetHorizontalLine(int verticalOffset)
+    public Symbol[] GetVerticalColumn(int reelIndex)
     {
-        int[] centers = slotSelector.GetSelectSymbolIndex();
-        var line = new Symbol[centers.Length];
+        int center = symbolSelector.GetSelectSymbolIndex()[reelIndex];
+        int[] offsets = BuildCenteredOffsets(verticalLineCount);
+        var column = new Symbol[offsets.Length];
+        for (int i = 0; i < offsets.Length; i++)
+            column[i] = symbolSelector.GetSymbol(reelIndex, center+offsets[i]);
+        return column;
+    }
+
+    /// <summary>
+    /// 選出位置からの縦オフセットで、全リール横一列の絵柄を取得する。
+    /// </summary>
+    public Symbol[] GetHorizontalRow(int verticalOffset)
+    {
+        int[] centers = symbolSelector.GetSelectSymbolIndex();
+        var row = new Symbol[centers.Length];
         for (int reel = 0; reel < centers.Length; reel++)
-            line[reel] = GetSymbolAt(reel, centers[reel] + verticalOffset);
-        return line;
+            row[reel] = symbolSelector.GetSymbol(reel, centers[reel] + verticalOffset);
+        return row;
     }
 
     /// <summary>
-    /// 左端から連続して同じ絵柄が並ぶ数を数える（3以上で成立）。
+    /// 縦列が揃っているか（列内すべて同じ Symbol かつ個数が minMatchCount 以上）。
     /// </summary>
-    public bool TryGetHorizontalMatch(Symbol[] line, out Symbol matchedSymbol, out int matchCount)
+    public bool TryGetVerticalMatch(int reelIndex, out Symbol matchedSymbol, out int matchCount)
+    {
+        return TryGetVerticalMatch(GetVerticalColumn(reelIndex), out matchedSymbol, out matchCount);
+    }
+
+    public bool TryGetVerticalMatch(Symbol[] column, out Symbol matchedSymbol, out int matchCount)
     {
         matchedSymbol = null;
         matchCount = 0;
-        if (line == null || line.Length == 0) return false;
+        if (column == null || column.Length < minMatchCount) return false;
 
-        matchedSymbol = line[0];
+        matchedSymbol = column[0];
         if (matchedSymbol == null) return false;
 
         matchCount = 1;
-        for (int i = 1; i < line.Length; i++)
+        for (int i = 1; i < column.Length; i++)
         {
-            if (line[i] != matchedSymbol) break;
+            if (column[i] != matchedSymbol) return false;
             matchCount++;
         }
 
-        return matchCount >= 3;
+        return matchCount >= minMatchCount;
     }
 
-    bool IsVerticalMatch(Symbol[] around)
+    /// <summary>
+    /// 左端から連続して同じ絵柄が並ぶか（minMatchCount 以上で成立）。
+    /// </summary>
+    public bool TryGetHorizontalMatch(Symbol[] row, out Symbol matchedSymbol, out int matchCount)
     {
-        if (around == null || around.Length != 3) return false;
-        return around[0] != null && around[0] == around[1] && around[1] == around[2];
+        matchedSymbol = null;
+        matchCount = 0;
+        if (row == null || row.Length < minMatchCount) return false;
+
+        matchedSymbol = row[0];
+        if (matchedSymbol == null) return false;
+
+        matchCount = 1;
+        for (int i = 1; i < row.Length; i++)
+        {
+            if (row[i] != matchedSymbol) break;
+            matchCount++;
+        }
+
+        return matchCount >= minMatchCount;
+    }
+
+    /// <summary>
+    /// 縦列の揃いだけを判定し、スコアを加算する。加算分を返す。
+    /// </summary>
+    public int AddScoreFromVerticalMatches()
+    {
+        int added = 0;
+        int reelCount = symbolSelector.GetSelectSymbolIndex().Length;
+
+        for (int reel = 0; reel < reelCount; reel++)
+        {
+            if (!TryGetVerticalMatch(reel, out Symbol symbol, out _)) continue;
+
+            matchedSymbols.Add(symbol);
+            added += symbol.score;
+        }
+
+        return added;
+    }
+
+    /// <summary>
+    /// 横列の揃いだけを判定し、スコアを加算する。加算分を返す。
+    /// </summary>
+    public int AddScoreFromHorizontalMatches()
+    {
+        int added = 0;
+        foreach (int offset in GetHorizontalRowOffsets())
+        {
+            var row = GetHorizontalRow(offset);
+            if (!TryGetHorizontalMatch(row, out Symbol symbol, out _)) continue;
+
+            matchedSymbols.Add(symbol);
+            added += symbol.score;
+        }
+
+        return added;
     }
 
     /// <summary>
@@ -84,38 +159,21 @@ public class SlotScoreManager : MonoBehaviour
     public int EvaluateScore()
     {
         matchedSymbols.Clear();
-        int added = 0;
-
-        int reelCount = slotSelector.GetSelectSymbolIndex().Length;
-
-        // 横: 選出位置の前・選出・後の3ラインそれぞれを判定
-        foreach (int verticalOffset in new[] { -1, 0, 1 })
-        {
-            var line = GetHorizontalLine(verticalOffset);
-            if (!TryGetHorizontalMatch(line, out Symbol symbol, out _)) continue;
-
-            matchedSymbols.Add(symbol);
-            added += symbol.score;
-        }
-
-        // 縦: 各リールで選出とその前後が揃っているか
-        for (int reel = 0; reel < reelCount; reel++)
-        {
-            var around = GetSymbolsAroundSelection(reel);
-            if (!IsVerticalMatch(around)) continue;
-
-            Symbol symbol = around[1];
-            matchedSymbols.Add(symbol);
-            added += symbol.score;
-        }
-
+        int added = AddScoreFromHorizontalMatches();
+        added += AddScoreFromVerticalMatches();
         totalScore += added;
         return added;
     }
 
-    /// <summary>
-    /// 直近の判定で揃った Symbol をコンソールに出力する。
-    /// </summary>
+    static int[] BuildCenteredOffsets(int lineCount)
+    {
+        int start = -(lineCount / 2);
+        var offsets = new int[lineCount];
+        for (int i = 0; i < lineCount; i++)
+            offsets[i] = start + i;
+        return offsets;
+    }
+
     [ContextMenu("OutPut_Console")]
     public void PrintMatchedSymbols()
     {

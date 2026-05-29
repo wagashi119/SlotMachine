@@ -41,7 +41,8 @@ public class SlotRandomSelect : MonoBehaviour
     public Symbol GetSymbol(Vector2Int index)
     {
         Vector2Int lengh = reels.GetLengh();
-        if (index.x >= lengh.x || index.y >= lengh.y || index.x < 0 || index.y < 0) return null;
+        if (index.x >= lengh.x || index.x < 0 || lengh.y == 0) return null;
+        index.y =((index.y % lengh.y) + lengh.y) % lengh.y;
 
         Symbol selectSymbol = symbols[index.x][index.y];
         if (selectSymbol)
@@ -51,5 +52,9 @@ public class SlotRandomSelect : MonoBehaviour
 
         Debug.LogError($"”Ô†:{lengh}‚ª{selectSymbol}‚Å‚·");
         return null;
+    }
+    public Symbol GetSymbol(int reelIndex, int symbolIndex)
+    {
+        return GetSymbol(new Vector2Int(reelIndex, symbolIndex));
     }
 }

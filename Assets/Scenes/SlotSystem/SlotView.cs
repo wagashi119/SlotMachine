@@ -258,6 +258,6 @@ public class SlotView : MonoBehaviour
         if (reel == null || reel.Count == 0) return;
 
         symbolIndex = ((symbolIndex % reel.Count) + reel.Count) % reel.Count;
-        img.sprite = reel[symbolIndex].image;
+        img.sprite = symbolSelector.GetSymbol(new(reelIndex, symbolIndex)).image;
     }
 }
