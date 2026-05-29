@@ -26,7 +26,7 @@ public class SlotRandomSelect : MonoBehaviour
         
         for (int i=0; i<reels.Length; i++)
         {
-            // 配列からランダムにセレクト
+            // 配???からランダ??にセレク??
 
             int selectIndex = Random.Range(0, reels[i].Count);
 
