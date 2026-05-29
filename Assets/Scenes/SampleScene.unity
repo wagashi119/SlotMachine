@@ -1471,6 +1471,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  reelStartStaggerDelay: 0.25
+  reelStopStaggerDelay: 1
+  rowSpacingOverride: 0
 --- !u!1 &1035537199
 GameObject:
   m_ObjectHideFlags: 0
@@ -2264,6 +2267,7 @@ GameObject:
   - component: {fileID: 2069879937}
   - component: {fileID: 2069879936}
   - component: {fileID: 2069879939}
+  - component: {fileID: 2069879940}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -2379,7 +2383,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 991734489}
         m_TargetAssemblyTypeName: SlotView, Assembly-CSharp
-        m_MethodName: CallRoll
+        m_MethodName: RollStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2389,6 +2393,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2069879940}
+        m_TargetAssemblyTypeName: SlotScoreManager, Assembly-CSharp
+        m_MethodName: OnRolled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2069879940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069879934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f402abb984df24c4d9720e696e894e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  symbolSelector: {fileID: 2069879939}
+  totalScore: 0
+  matchedSymbols: []
+  verticalLineCount: 3
+  horizontalLineCount: 3
+  minMatchCount: 3
 --- !u!1 &2109557941
 GameObject:
   m_ObjectHideFlags: 0

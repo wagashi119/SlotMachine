@@ -60,7 +60,8 @@ public class SlotScoreManager : MonoBehaviour
     /// </summary>
     public Symbol[] GetHorizontalRow(int verticalOffset)
     {
-        int[] centers = symbolSelector.GetSelectSymbolIndex();
+        int[] centers = new int[symbolSelector.slotsCount];
+        centers = symbolSelector.GetSelectSymbolIndex();
         var row = new Symbol[centers.Length];
         for (int reel = 0; reel < centers.Length; reel++)
             row[reel] = symbolSelector.GetSymbol(reel, centers[reel] + verticalOffset);

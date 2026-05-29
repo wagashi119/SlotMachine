@@ -36,7 +36,11 @@ public class SlotRandomSelect : MonoBehaviour
         onRolled.Invoke(selectSymbolIndexs);
     }
 
-    public int[] GetSelectSymbolIndex() => selectSymbolIndexs;
+    public int[] GetSelectSymbolIndex() {
+        //Debug.Log($"lengh:{selectSymbolIndexs.Length}, {selectSymbolIndexs == null}");
+
+        return selectSymbolIndexs;
+    }
 
     public Symbol GetSymbol(Vector2Int index)
     {
