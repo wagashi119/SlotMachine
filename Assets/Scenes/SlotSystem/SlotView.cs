@@ -34,6 +34,7 @@ public class SlotView : MonoBehaviour
     int centerRow;
 
     bool isRolling;
+    public bool IsRolling => isRolling;
     float rollTimer;
     int[] targetIndices;
     float[] scrollIndex;
@@ -62,9 +63,6 @@ public class SlotView : MonoBehaviour
 
         CacheBasePositions();
         rowSpacing = ResolveRowSpacing();
-
-        symbolSelector.Roll();
-        ApplyImages(symbolSelector.GetSelectSymbolIndex());
     }
 
     int CountChildImages(Image root)

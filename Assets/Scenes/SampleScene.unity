@@ -303,6 +303,114 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 186114798}
   m_CullTransparentMesh: 1
+--- !u!1 &198406828
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 198406829}
+  - component: {fileID: 198406832}
+  - component: {fileID: 198406831}
+  - component: {fileID: 198406830}
+  m_Layer: 0
+  m_Name: Cube (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &198406829
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198406828}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.7661, y: 6.9266, z: 9.1771}
+  m_LocalScale: {x: 7.655761, y: 9.922974, z: 0.5742}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 779388204}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &198406830
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198406828}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &198406831
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198406828}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &198406832
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198406828}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &217959773
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,6 +1162,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 779388204}
+  - component: {fileID: 779388205}
   m_Layer: 0
   m_Name: Stage
   m_TagString: Untagged
@@ -1077,8 +1186,29 @@ Transform:
   - {fileID: 804048011}
   - {fileID: 2069879935}
   - {fileID: 23615767}
+  - {fileID: 198406829}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &779388205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779388203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efa486dc82cee445937f9ec8cac9fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  symbolSelector: {fileID: 2069879939}
+  slotView: {fileID: 991734489}
+  slotEffect: {fileID: 991734490}
+  rollCount: 0
+  maxRollCount: 10
+  reels:
+  - {fileID: 11400000, guid: d824e6e0588b81f45b3e21d9ac75c049, type: 2}
+  slotState: 0
 --- !u!1 &804048010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,7 +1237,7 @@ Transform:
   m_GameObject: {fileID: 804048010}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.2729, y: 1.83, z: -1.4766}
+  m_LocalPosition: {x: 6.51, y: 1.83, z: 2.15}
   m_LocalScale: {x: 42.246838, y: 1, z: 46.178753}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1314,6 +1444,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851639596}
   m_CullTransparentMesh: 1
+--- !u!1 &867772811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 867772812}
+  m_Layer: 0
+  m_Name: EffectPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &867772812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867772811}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.83, y: 4.53, z: 2.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &991734484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,6 +1488,7 @@ GameObject:
   - component: {fileID: 991734486}
   - component: {fileID: 991734485}
   - component: {fileID: 991734489}
+  - component: {fileID: 991734490}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -1474,6 +1636,24 @@ MonoBehaviour:
   reelStartStaggerDelay: 0.25
   reelStopStaggerDelay: 1
   rowSpacingOverride: 0
+--- !u!114 &991734490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991734484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4f56d8dc9caa242b486624b2cb3266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreManager: {fileID: 2069879940}
+  effectRoot: {fileID: 867772812}
+  slotScores: []
+  effecting: 0
+  effectInterval: 1
+  symboleffectInterbal: 0.5
 --- !u!1 &1035537199
 GameObject:
   m_ObjectHideFlags: 0
@@ -2126,8 +2306,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2069879939}
-        m_TargetAssemblyTypeName: SlotRandomSelect, Assembly-CSharp
+      - m_Target: {fileID: 779388205}
+        m_TargetAssemblyTypeName: SlotManager, Assembly-CSharp
         m_MethodName: Roll
         m_Mode: 1
         m_Arguments:
@@ -2376,7 +2556,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b9db5515cf3d441a9fe0269c29afca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reels: {fileID: 11400000, guid: 06262558b9c98584aab4dfd6274955c4, type: 2}
   selectSymbolIndexs: 
   onRolled:
     m_PersistentCalls:
@@ -2506,6 +2685,7 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 991734488}
+  - {fileID: 867772812}
   - {fileID: 779388204}
   - {fileID: 1035537203}
   - {fileID: 1235490502}

@@ -2,11 +2,26 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
+[System.Serializable]
+public struct SlotScore
+{
+    public int gatherCount; 
+    [SerializeField] private Symbol symbol;
+    public int score => gatherCount * symbol.score;
+    public GameObject effect => symbol.effect;
+
+    public SlotScore(Symbol symbol, int gatherCount)
+    {
+        this.symbol = symbol;
+        this.gatherCount = gatherCount;
+    }
+}
+
 public class SlotScoreManager : MonoBehaviour
 {
     [SerializeField] SlotRandomSelect symbolSelector;
     [SerializeField] int totalScore = 0;
-    [SerializeField] List<Symbol> matchedSymbols = new List<Symbol>();
+    [SerializeField] List<SlotScore> matchedSymbols = new List<SlotScore>();
 
     [Header("判定範囲")]
     [Tooltip("選出位置を中心に、上下へ何段ずつ見るか。3 なら前・選出・後の3段。")]
@@ -17,7 +32,7 @@ public class SlotScoreManager : MonoBehaviour
     [SerializeField] int minMatchCount = 3;
 
     public int TotalScore => totalScore;
-    public IReadOnlyList<Symbol> MatchedSymbols => matchedSymbols;
+    public IReadOnlyList<SlotScore> MatchedSymbols => matchedSymbols;
     public int VerticalLineCount => verticalLineCount;
     public int HorizontalLineCount => horizontalLineCount;
     public int MinMatchCount => minMatchCount;
@@ -127,10 +142,11 @@ public class SlotScoreManager : MonoBehaviour
 
         for (int reel = 0; reel < reelCount; reel++)
         {
-            if (!TryGetVerticalMatch(reel, out Symbol symbol, out _)) continue;
+            if (!TryGetVerticalMatch(reel, out Symbol symbol, out int matchCount)) continue;
 
-            matchedSymbols.Add(symbol);
-            added += symbol.score;
+            var slotScore = new SlotScore(symbol, matchCount);
+            matchedSymbols.Add(slotScore);
+            added += slotScore.score;
         }
 
         return added;
@@ -145,10 +161,11 @@ public class SlotScoreManager : MonoBehaviour
         foreach (int offset in GetHorizontalRowOffsets())
         {
             var row = GetHorizontalRow(offset);
-            if (!TryGetHorizontalMatch(row, out Symbol symbol, out _)) continue;
+            if (!TryGetHorizontalMatch(row, out Symbol symbol, out int matchCount)) continue;
 
-            matchedSymbols.Add(symbol);
-            added += symbol.score;
+            var slotScore = new SlotScore(symbol, matchCount);
+            matchedSymbols.Add(slotScore);
+            added += slotScore.score;
         }
 
         return added;
@@ -188,8 +205,8 @@ public class SlotScoreManager : MonoBehaviour
         sb.AppendLine("[SlotScore] 揃った絵柄:");
         for (int i = 0; i < matchedSymbols.Count; i++)
         {
-            Symbol s = matchedSymbols[i];
-            sb.AppendLine($"  {i + 1}. {s.name} (score: {s.score})");
+            SlotScore entry = matchedSymbols[i];
+            sb.AppendLine($"  {i + 1}. x{entry.gatherCount} (score: {entry.score})");
         }
 
         Debug.Log(sb.ToString());

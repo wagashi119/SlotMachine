@@ -4,15 +4,15 @@ using UnityEngine.Events;
 
 public class SlotRandomSelect : MonoBehaviour
 {
-    [SerializeField] Reels reels;
+    Reels reels;
     [SerializeField] int[] selectSymbolIndexs = new int[0];
     public UnityEvent<int[]> onRolled = new UnityEvent<int[]>();
 
     public int slotsCount => reels.GetLengh().x;
     public List<Symbol>[] symbols = new List<Symbol>[0];
 
-    private void Awake()
-    {
+    public void ChangeReels(Reels reels) {
+        this.reels = reels;
         symbols = new List<Symbol>[reels.GetLengh().x];
         symbols = reels.GetAllReels();
     }
@@ -26,7 +26,7 @@ public class SlotRandomSelect : MonoBehaviour
         
         for (int i=0; i<reels.Length; i++)
         {
-            // ”z???‚©‚çƒ‰ƒ“ƒ_??‚ÉƒZƒŒƒN??
+            // ï¿½z???ï¿½ï¿½ï¿½çƒ‰ï¿½ï¿½ï¿½_??ï¿½ÉƒZï¿½ï¿½ï¿½N??
 
             int selectIndex = Random.Range(0, reels[i].Count);
 
@@ -54,7 +54,7 @@ public class SlotRandomSelect : MonoBehaviour
             return selectSymbol;
         }
 
-        Debug.LogError($"”Ô†:{lengh}‚ª{selectSymbol}‚Å‚·");
+        Debug.LogError($"ï¿½Ôï¿½:{lengh}ï¿½ï¿½{selectSymbol}ï¿½Å‚ï¿½");
         return null;
     }
     public Symbol GetSymbol(int reelIndex, int symbolIndex)
