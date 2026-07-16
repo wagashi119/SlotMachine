@@ -62,8 +62,11 @@ public class SlotManager : MonoBehaviour
 
     void ChangeReels() {
         Debug.Log("Change_Reels");
+        int reelIndex = rollCount / maxRollCount;
+        if (reelIndex >= reels.Count) {
+            reelIndex = Mathf.Min(reelIndex, reels.Count - 1);
+        }
 
-        rollCount = 0;
-        symbolSelector.ChangeReels(reels[1]);
+        symbolSelector.ChangeReels(reels[reelIndex]);
     }
 }

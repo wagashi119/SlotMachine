@@ -3,17 +3,19 @@ using System.Text;
 using UnityEngine;
 
 [System.Serializable]
-public struct SlotScore
+public struct MatchState
 {
-    public int gatherCount; 
-    [SerializeField] private Symbol symbol;
-    public int score => gatherCount * symbol.score;
-    public GameObject effect => symbol.effect;
-
-    public SlotScore(Symbol symbol, int gatherCount)
+    public int gatherCount;
+    public int score;
+    public GameObject effect;
+    public float effectInterval;
+    // 素材/音
+    public MatchState(Symbol symbol, int gatherCount)
     {
-        this.symbol = symbol;
         this.gatherCount = gatherCount;
+        this.score = gatherCount * symbol.score;
+        this.effect = symbol.effect;
+        this.effectInterval = symbol.effectInterval;
     }
 }
 
@@ -21,7 +23,7 @@ public class SlotScoreManager : MonoBehaviour
 {
     [SerializeField] SlotRandomSelect symbolSelector;
     [SerializeField] int totalScore = 0;
-    [SerializeField] List<SlotScore> matchedSymbols = new List<SlotScore>();
+    [SerializeField] List<MatchState> matchedSymbols = new List<MatchState>();
 
     [Header("判定範囲")]
     [Tooltip("選出位置を中心に、上下へ何段ずつ見るか。3 なら前・選出・後の3段。")]
@@ -32,7 +34,7 @@ public class SlotScoreManager : MonoBehaviour
     [SerializeField] int minMatchCount = 3;
 
     public int TotalScore => totalScore;
-    public IReadOnlyList<SlotScore> MatchedSymbols => matchedSymbols;
+    public IReadOnlyList<MatchState> MatchedSymbols => matchedSymbols;
     public int VerticalLineCount => verticalLineCount;
     public int HorizontalLineCount => horizontalLineCount;
     public int MinMatchCount => minMatchCount;
@@ -144,7 +146,7 @@ public class SlotScoreManager : MonoBehaviour
         {
             if (!TryGetVerticalMatch(reel, out Symbol symbol, out int matchCount)) continue;
 
-            var slotScore = new SlotScore(symbol, matchCount);
+            var slotScore = new MatchState(symbol, matchCount);
             matchedSymbols.Add(slotScore);
             added += slotScore.score;
         }
@@ -163,7 +165,7 @@ public class SlotScoreManager : MonoBehaviour
             var row = GetHorizontalRow(offset);
             if (!TryGetHorizontalMatch(row, out Symbol symbol, out int matchCount)) continue;
 
-            var slotScore = new SlotScore(symbol, matchCount);
+            var slotScore = new MatchState(symbol, matchCount);
             matchedSymbols.Add(slotScore);
             added += slotScore.score;
         }
@@ -197,15 +199,15 @@ public class SlotScoreManager : MonoBehaviour
     {
         if (matchedSymbols.Count == 0)
         {
-            Debug.Log("[SlotScore] 揃った絵柄はありません。");
+            Debug.Log("[MatchEffect] 揃った絵柄はありません。");
             return;
         }
 
         var sb = new StringBuilder();
-        sb.AppendLine("[SlotScore] 揃った絵柄:");
+        sb.AppendLine("[MatchEffect] 揃った絵柄:");
         for (int i = 0; i < matchedSymbols.Count; i++)
         {
-            SlotScore entry = matchedSymbols[i];
+            MatchState entry = matchedSymbols[i];
             sb.AppendLine($"  {i + 1}. x{entry.gatherCount} (score: {entry.score})");
         }
 

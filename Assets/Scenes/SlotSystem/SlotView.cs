@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /**
-SlotRamdomSelect‚©‚çAGetSelectSymbol‚ğ“üè
+SlotRamdomSelectï¿½ï¿½ï¿½ï¿½AGetSelectSymbolï¿½ï¿½ï¿½ï¿½ï¿½
 
-reelRoots[0] = ¶’[AreelRoots[reelCount-1] = ‰E’[B
-‰ñ“]‚Í‰E’[‚©‚ç‡‚ÉŠJn‚µA‰E’[‚©‚ç‡‚É’â~‚·‚éB
+reelRoots[0] = ï¿½ï¿½ï¿½[ï¿½AreelRoots[reelCount-1] = ï¿½Eï¿½[ï¿½B
+ï¿½ï¿½]ï¿½Í‰Eï¿½[ï¿½ï¿½ï¿½ç‡ï¿½ÉŠJï¿½nï¿½ï¿½ï¿½Aï¿½Eï¿½[ï¿½ï¿½ï¿½ç‡ï¿½É’ï¿½~ï¿½ï¿½ï¿½ï¿½B
 */
 
 public class SlotView : MonoBehaviour
@@ -18,12 +18,12 @@ public class SlotView : MonoBehaviour
     [SerializeField] float rollStartVelo = 10f;
     [SerializeField] AnimationCurve rollVeloCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 0));
 
-    [Header("‰E’[‚©‚ç‡‚É‚¸‚ç‚·ŠÔ")]
+    [Header("ï¿½Eï¿½[ï¿½ï¿½ï¿½ç‡ï¿½É‚ï¿½ï¿½ç‚·ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] float reelStartStaggerDelay = 0.25f;
     [SerializeField] float reelStopStaggerDelay = 0.25f;
 
-    [Header("cƒXƒNƒ[ƒ‹")]
-    [Tooltip("0 ‚È‚çq Image ‚Ì‰Šú”z’u‚©‚ç©“®ŒvZ")]
+    [Header("ï¿½cï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½")]
+    [Tooltip("0 ï¿½È‚ï¿½q Image ï¿½Ìï¿½ï¿½ï¿½ï¿½zï¿½uï¿½ï¿½ï¿½ç©ï¿½ï¿½ï¿½vï¿½Z")]
     [SerializeField] float rowSpacingOverride;
 
     Image[,] slotImages;
@@ -46,7 +46,7 @@ public class SlotView : MonoBehaviour
         reelCount = symbolSelector.slotsCount;
         if (reelRoots == null || reelRoots.Length != reelCount)
         {
-            Debug.LogError($"SlotView: reelRoots ‚Ì”({reelRoots?.Length ?? 0})‚ÆƒXƒƒbƒg”({reelCount})‚ªˆê’v‚µ‚Ä‚¢‚Ü‚¹‚ñB");
+            Debug.LogError($"SlotView: reelRoots ï¿½Ìï¿½({reelRoots?.Length ?? 0})ï¿½ÆƒXï¿½ï¿½ï¿½bï¿½gï¿½ï¿½({reelCount})ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½B");
             enabled = false;
             return;
         }
@@ -177,9 +177,11 @@ public class SlotView : MonoBehaviour
     {
         targetIndices = symbolSelector.GetSelectSymbolIndex();
 
-        scrollIndex = new float[reelCount];
-        startIndices = new int[reelCount];
-        reelStopped = new bool[reelCount];
+        // eorror : IndexOutOfRangeException: Index was outside the bounds of the array.
+        int arrayLength = targetIndices.Length;
+        scrollIndex = new float[arrayLength];
+        startIndices = new int[arrayLength];
+        reelStopped = new bool[arrayLength];
 
         for (int reel = 0; reel < reelCount; reel++)
         {
