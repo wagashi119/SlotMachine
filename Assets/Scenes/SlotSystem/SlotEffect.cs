@@ -5,6 +5,8 @@ public class SlotEffect : MonoBehaviour
 {
     [SerializeField] SlotScoreManager scoreManager;
     [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip matchAudioClip;
+    [SerializeField] AudioClip winAudioClip;
     [SerializeField] Transform effectRoot;
     [SerializeField] GameObject matchEffectPanel;
 
@@ -21,6 +23,10 @@ public class SlotEffect : MonoBehaviour
         effecting = true;
         effectCount = 0;
         slotScores = scoreManager.MatchedSymbols;
+
+        if (slotScores.Count > 0 && audioSource != null && winAudioClip != null) {
+            audioSource.PlayOneShot(winAudioClip);
+        }
 
         Invoke("MatchEffect", matchEffectInterbal);
     }
@@ -40,7 +46,9 @@ public class SlotEffect : MonoBehaviour
             GameObject effectInstance = Instantiate(effectPrefab, effectRoot);
             //Destroy(effectInstance, symbolEffectInterval);
         }
-        audioSource.Play();
+        if (audioSource != null && matchAudioClip != null) {
+            audioSource.PlayOneShot(matchAudioClip);
+        }
         
         // 記録された演出回数から、終了タイミングを検知
         if (slotScores.Count <= effectCount) {

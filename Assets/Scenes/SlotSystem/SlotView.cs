@@ -21,6 +21,10 @@ public class SlotView : MonoBehaviour
     [Header("�E�[���珇�ɂ��炷����")]
     [SerializeField] float reelStartStaggerDelay = 0.25f;
     [SerializeField] float reelStopStaggerDelay = 0.25f;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource spinAudioSource;
+    [SerializeField] AudioClip spinAudioClip;
+    [SerializeField] AudioClip reelStopAudioClip;
 
     [Header("�c�X�N���[��")]
     [Tooltip("0 �Ȃ�q Image �̏����z�u���玩���v�Z")]
@@ -170,6 +174,9 @@ public class SlotView : MonoBehaviour
         if (allStopped)
         {
             isRolling = false;
+            if (spinAudioSource != null) {
+                spinAudioSource.Stop();
+            }
         }
     }
 
@@ -193,6 +200,11 @@ public class SlotView : MonoBehaviour
 
         rollTimer = 0f;
         isRolling = true;
+        if (spinAudioSource != null && spinAudioClip != null) {
+            spinAudioSource.clip = spinAudioClip;
+            spinAudioSource.loop = true;
+            spinAudioSource.Play();
+        }
     }
 
     int OrderFromRight(int reel) => reelCount - 1 - reel;
@@ -219,6 +231,9 @@ public class SlotView : MonoBehaviour
 
     void ApplyReelStopped(int reel)
     {
+        if (audioSource != null && reelStopAudioClip != null) {
+            audioSource.PlayOneShot(reelStopAudioClip);
+        }
         ResetReelPositions(reel);
         ApplyReelImages(reel, targetIndices[reel]);
     }

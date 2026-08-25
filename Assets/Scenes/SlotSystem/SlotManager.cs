@@ -13,6 +13,8 @@ public class SlotManager : MonoBehaviour
     [SerializeField] SlotRandomSelect symbolSelector;
     [SerializeField] SlotView slotView;
     [SerializeField] SlotEffect slotEffect;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip rollAudioClip;
     [SerializeField] int rollCount = 0;
     [SerializeField] int maxRollCount = 10;
     [SerializeField] List<Reels> reels = new List<Reels>();
@@ -35,6 +37,9 @@ public class SlotManager : MonoBehaviour
             return;
         }
         symbolSelector.Roll();
+        if (audioSource != null && rollAudioClip != null) {
+            audioSource.PlayOneShot(rollAudioClip);
+        }
         slotState = SlotState.Rolling;
         rollCount++;
     }
