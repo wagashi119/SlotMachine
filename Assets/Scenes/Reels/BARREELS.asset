@@ -14,20 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reelsLengh: 5
   reels1:
-  - {fileID: 11400000, guid: 4474035eb217f5c48b392f1890037548, type: 2}
-  - {fileID: 11400000, guid: e73dc148d5e6e214aa27b227313aec77, type: 2}
-  - {fileID: 11400000, guid: 274e9703119ad5f4ea666855e6ffb788, type: 2}
-  - {fileID: 11400000, guid: 4d0afaf1b9a0fad48abbf414d362a63e, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
   - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
   reels2:
-  - {fileID: 11400000, guid: 274e9703119ad5f4ea666855e6ffb788, type: 2}
-  - {fileID: 11400000, guid: 4d0afaf1b9a0fad48abbf414d362a63e, type: 2}
   - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
-  - {fileID: 11400000, guid: e73dc148d5e6e214aa27b227313aec77, type: 2}
-  - {fileID: 11400000, guid: 4474035eb217f5c48b392f1890037548, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
   reels3:
-  - {fileID: 11400000, guid: 4d0afaf1b9a0fad48abbf414d362a63e, type: 2}
-  - {fileID: 11400000, guid: 4474035eb217f5c48b392f1890037548, type: 2}
-  - {fileID: 11400000, guid: e73dc148d5e6e214aa27b227313aec77, type: 2}
   - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
-  - {fileID: 11400000, guid: 274e9703119ad5f4ea666855e6ffb788, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}
+  - {fileID: 11400000, guid: 306d6ab4103dce940bd701b2cc6ffe5e, type: 2}

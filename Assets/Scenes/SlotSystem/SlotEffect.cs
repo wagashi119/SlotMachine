@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class SlotEffect : MonoBehaviour
 {
     [SerializeField] SlotScoreManager scoreManager;
+    [SerializeField] AudioSource audioSource;
     [SerializeField] Transform effectRoot;
     [SerializeField] GameObject matchEffectPanel;
 
@@ -39,6 +40,7 @@ public class SlotEffect : MonoBehaviour
             GameObject effectInstance = Instantiate(effectPrefab, effectRoot);
             //Destroy(effectInstance, symbolEffectInterval);
         }
+        audioSource.Play();
         
         // 記録された演出回数から、終了タイミングを検知
         if (slotScores.Count <= effectCount) {
