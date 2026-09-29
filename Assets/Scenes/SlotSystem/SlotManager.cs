@@ -22,6 +22,10 @@ public class SlotManager : MonoBehaviour
     [SerializeField] int maxRollCount = 10;
     [SerializeField] List<Reels> reels = new List<Reels>();
     [SerializeField] SlotState slotState = SlotState.Idle;
+    Reels currentReels;
+
+    public static Reels LastUsedReels { get; private set; }
+    public Reels CurrentReels => currentReels;
 
     //仮追加部分
     [SerializeField] Text remainingAttemptstxt;
@@ -37,12 +41,12 @@ public class SlotManager : MonoBehaviour
 
     public void Awake() {
         slotState = SlotState.Idle;
-        if (slotView == null || slotEffect == null || symbolSelector == null) {
+        if (slotView == null || slotEffect == null || symbolSelector == null || reels.Count == 0 || reels[0] == null) {
             Debug.LogError("SlotManager: SlotView, SlotEffect, SlotRandomSelect is not assigned");
             enabled = false;
             return;
         }
-        symbolSelector.ChangeReels(reels[0]);
+        SetCurrentReels(reels[0]);
 
     }
 
@@ -108,6 +112,12 @@ public class SlotManager : MonoBehaviour
             reelIndex = Mathf.Min(reelIndex, reels.Count - 1);
         }
 
-        symbolSelector.ChangeReels(reels[reelIndex]);
+        SetCurrentReels(reels[reelIndex]);
+    }
+
+    void SetCurrentReels(Reels nextReels) {
+        currentReels = nextReels;
+        LastUsedReels = nextReels;
+        symbolSelector.ChangeReels(nextReels);
     }
 }
