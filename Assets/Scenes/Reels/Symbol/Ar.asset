@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Ar
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 6ccf9ea4f02217145b20ef3fc24b75a9, type: 3}
-  score: 8
+  effect: {fileID: 9040832147497698956, guid: fe8444521c5761941a9cef4777a5da17, type: 3}
+  score: 40
+  effectInterval: 0

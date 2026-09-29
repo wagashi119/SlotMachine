@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class SlotManager : MonoBehaviour
 {
@@ -20,6 +23,18 @@ public class SlotManager : MonoBehaviour
     [SerializeField] List<Reels> reels = new List<Reels>();
     [SerializeField] SlotState slotState = SlotState.Idle;
 
+    //仮追加部分
+    [SerializeField] Text remainingAttemptstxt;
+    int RemainingAttenpts { get { return remainingAttenpts; } set { 
+            remainingAttenpts = value;
+            if (remainingAttemptstxt != null)
+            {
+                remainingAttemptstxt.text = $"残り{remainingAttenpts}回";
+            }
+        } 
+    }
+    int remainingAttenpts = 10;
+
     public void Awake() {
         slotState = SlotState.Idle;
         if (slotView == null || slotEffect == null || symbolSelector == null) {
@@ -28,6 +43,15 @@ public class SlotManager : MonoBehaviour
             return;
         }
         symbolSelector.ChangeReels(reels[0]);
+
+    }
+
+    private void Start()
+    {
+        //仮追加部分
+        //remainingAttemptstxt = GetComponent<Text>();
+
+        RemainingAttenpts = 10;
     }
 
     public void Roll()
@@ -42,6 +66,9 @@ public class SlotManager : MonoBehaviour
         }
         slotState = SlotState.Rolling;
         rollCount++;
+
+        //仮追加部分
+        RemainingAttenpts--;
     }
 
     bool ReelsChangeRoll => rollCount % maxRollCount == 0;
@@ -63,6 +90,15 @@ public class SlotManager : MonoBehaviour
             }
             slotState = SlotState.Idle;
         }
+
+        //仮でStartからResultまで動くために以下に色々書いておくのでいらなかったら消しておいてください
+        //remainingAttemptstxt.text = "残り回数" + remainingAttenpts.ToString(); 
+        if (RemainingAttenpts <= 0 && slotState == SlotState.Idle)
+        {
+            SceneManager.LoadScene("Result");
+
+        }
+
     }
 
     void ChangeReels() {

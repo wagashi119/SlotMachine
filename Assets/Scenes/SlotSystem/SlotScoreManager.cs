@@ -179,9 +179,18 @@ public class SlotScoreManager : MonoBehaviour
     public int EvaluateScore()
     {
         matchedSymbols.Clear();
+
         int added = AddScoreFromHorizontalMatches();
         added += AddScoreFromVerticalMatches();
+
         totalScore += added;
+
+        // GameDataにスコアを保存
+        if (GameData.Instance != null)
+        {
+            GameData.Instance.score = totalScore;
+        }
+
         return added;
     }
 
