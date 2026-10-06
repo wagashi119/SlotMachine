@@ -1,14 +1,27 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameData : MonoBehaviour
 {
     public static GameData Instance;
 
-    public int score = 0;
+    private int score = 0;
+    private IReadOnlyList<MatchState> slotScores = new List<MatchState>();
+
+    public void SetScore(int score, List<MatchState> slotScores)
+    {
+        this.score = score;
+        this.slotScores = slotScores;
+    }
+
+    public (int, IReadOnlyList<MatchState>) GetScore()
+    {
+        return (score, slotScores);
+    }
 
     private void Awake()
     {
-        // ‚·‚Å‚É‘¶İ‚µ‚Ä‚¢‚½‚çíœ
+        // ï¿½ï¿½ï¿½Å‚É‘ï¿½ï¿½İ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½íœ
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -22,5 +35,6 @@ public class GameData : MonoBehaviour
     public void ResetScore()
     {
         score = 0;
+        slotScores = new List<MatchState>().AsReadOnly();
     }
 }
