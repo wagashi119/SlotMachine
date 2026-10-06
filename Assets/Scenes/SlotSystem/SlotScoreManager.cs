@@ -188,7 +188,7 @@ public class SlotScoreManager : MonoBehaviour
         // GameDataにスコアを保存
         if (GameData.Instance != null)
         {
-            GameData.Instance.score = totalScore;
+            GameData.Instance.SetScore(totalScore, matchedSymbols);
         }
 
         return added;
