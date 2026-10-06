@@ -1,25 +1,44 @@
+
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 
 public class MovieSceneChange : MonoBehaviour
 {
-    public VideoPlayer _movie;
-    private float movieTime = 0;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] VideoPlayer movie;
+
+    private bool sceneChanged = false;
+
     void Start()
     {
-        movieTime = (float)_movie.clip.length;
+        if (movie != null)
+        {
+            movie.loopPointReached += OnMovieFinished;
+        }
+        else
+        {
+            Debug.LogError("VideoPlayerÇ™ê›íËÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnMovieFinished(VideoPlayer vp)
     {
-        movieTime -= Time.deltaTime;
+        ChangeScene();
+    }
 
-        if(movieTime < 0)
+    public void ChangeScene()
+    {
+        if (sceneChanged) return;
+
+        sceneChanged = true;
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    private void OnDestroy()
+    {
+        if (movie != null)
         {
-            SceneManager.LoadScene("SampleScene");
+            movie.loopPointReached -= OnMovieFinished;
         }
     }
 }
