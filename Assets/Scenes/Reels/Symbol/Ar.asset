@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6299415293bc43a554fb3a7824433, type: 3}
   m_Name: Ar
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 6ccf9ea4f02217145b20ef3fc24b75a9, type: 3}
+  image: {fileID: 21300000, guid: 80152361ca6545546b38ae72c5ade48d, type: 3}
   effect: {fileID: 9040832147497698956, guid: fe8444521c5761941a9cef4777a5da17, type: 3}
   score: 40
   effectInterval: 0
