@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BAR
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 1d6ce831b6d6d9943a41cc3dbd9807cc, type: 3}
-  effect: {fileID: 9040832147497698956, guid: fe8444521c5761941a9cef4777a5da17, type: 3}
-  score: 15
+  effect: {fileID: 5832746839310530716, guid: 431fcb45d4674ae4185d2261eff6604d, type: 3}
+  score: 500
   effectInterval: 0.9

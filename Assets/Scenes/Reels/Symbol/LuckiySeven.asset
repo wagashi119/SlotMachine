@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LuckiySeven
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: b11ab5f2a664eb34ba876082372d2498, type: 3}
-  effect: {fileID: 9040832147497698956, guid: fe8444521c5761941a9cef4777a5da17, type: 3}
-  score: 100
+  effect: {fileID: 663637183388969533, guid: 3ec0d2f723989114093622c05bc330be, type: 3}
+  score: 2500
   effectInterval: 0
