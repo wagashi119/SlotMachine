@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Melon
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 371ecd60a61c12b499990771408e7e1e, type: 3}
-  effect: {fileID: 9040832147497698956, guid: fe8444521c5761941a9cef4777a5da17, type: 3}
+  effect: {fileID: 8797007798209039703, guid: 30b45d39bb5edb14ba30dd46bf4eec31, type: 3}
   score: 400
   effectInterval: 0

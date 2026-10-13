@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: pumpkim
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: e20207f1ce27fbd429358836f68c2f24, type: 3}
-  effect: {fileID: 9040832147497698956, guid: fe8444521c5761941a9cef4777a5da17, type: 3}
+  effect: {fileID: 2058573737672130109, guid: ea3f963a6e173c245abe8670664314f5, type: 3}
   score: 200
   effectInterval: 0
