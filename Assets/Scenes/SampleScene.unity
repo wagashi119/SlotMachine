@@ -995,7 +995,7 @@ MonoBehaviour:
   rollCount: 0
   maxRollCount: 10
   reels:
-  - {fileID: 11400000, guid: 50af678c8ce214343acfa9b4661069d6, type: 2}
+  - {fileID: 11400000, guid: 06262558b9c98584aab4dfd6274955c4, type: 2}
   slotState: 0
   remainingAttemptstxt: {fileID: 1095309305}
 --- !u!1 &804048010
