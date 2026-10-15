@@ -990,14 +990,17 @@ MonoBehaviour:
   symbolSelector: {fileID: 2069879939}
   slotView: {fileID: 991734489}
   slotEffect: {fileID: 991734490}
+  scoreBoardGenerator: {fileID: 1313660769}
   audioSource: {fileID: 867772813}
   rollAudioClip: {fileID: 8300000, guid: 1ff6f288d3e99f14f97f1e53ffdbe3fc, type: 3}
-  rollCount: 0
-  maxRollCount: 10
   reels:
   - {fileID: 11400000, guid: 06262558b9c98584aab4dfd6274955c4, type: 2}
+  - {fileID: 11400000, guid: d824e6e0588b81f45b3e21d9ac75c049, type: 2}
   slotState: 0
   remainingAttemptstxt: {fileID: 1095309305}
+  maxAttemptstxt: 10
+  suripriseRoll: 3
+  remainingAttenpts: 0
 --- !u!1 &804048010
 GameObject:
   m_ObjectHideFlags: 0
@@ -2530,7 +2533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.93207544, g: 0.93207544, b: 0.93207544, a: 1}
+  m_Color: {r: 0.93962264, g: 0.2818867, b: 0.2818867, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
