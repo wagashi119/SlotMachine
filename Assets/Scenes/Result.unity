@@ -1029,7 +1029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 644897814}
-  matchedSymbolsText: {fileID: 21415563}
+  matchedSymbolsText: {fileID: 0}
   matchedSymbols: []
 --- !u!4 &1270840924
 Transform:
