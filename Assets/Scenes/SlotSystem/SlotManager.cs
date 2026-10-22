@@ -16,6 +16,7 @@ public class SlotManager : MonoBehaviour
     [SerializeField] SlotRandomSelect symbolSelector;
     [SerializeField] SlotView slotView;
     [SerializeField] SlotEffect slotEffect;
+    [SerializeField] SlotScoreManager scoreManager;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip rollAudioClip;
     [SerializeField] int rollCount = 0;
@@ -79,7 +80,17 @@ public class SlotManager : MonoBehaviour
     void Update()
     {
         // スロット起動後かつ、ロール終了後
-        if (slotState == SlotState.Rolling && !slotView.IsRolling) {
+        if (slotState == SlotState.Rolling && !slotView.IsRolling)
+        {
+            if (scoreManager != null)
+            {
+                scoreManager.EvaluateScore();
+            }
+            else
+            {
+                Debug.LogError("SlotManager: ScoreManager is not assigned");
+            }
+
             slotEffect.EffectStart();
             slotState = SlotState.Stopping;
         }
