@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6299415293bc43a554fb3a7824433, type: 3}
   m_Name: pumpkim
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: e20207f1ce27fbd429358836f68c2f24, type: 3}
+  image: {fileID: 21300000, guid: d38c4579ef1552b49b6875f3fb830138, type: 3}
   effect: {fileID: 2058573737672130109, guid: ea3f963a6e173c245abe8670664314f5, type: 3}
   score: 200
   effectInterval: 0

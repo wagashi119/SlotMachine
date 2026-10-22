@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6299415293bc43a554fb3a7824433, type: 3}
   m_Name: LuckiySeven
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: b11ab5f2a664eb34ba876082372d2498, type: 3}
+  image: {fileID: 21300000, guid: de468aef6e88ceb4aa7e8523ae514662, type: 3}
   effect: {fileID: 663637183388969533, guid: 3ec0d2f723989114093622c05bc330be, type: 3}
   score: 2500
   effectInterval: 0
