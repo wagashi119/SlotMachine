@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class ScoreBoardGenerator : MonoBehaviour
 {
-    [SerializeField] SlotManager slotManager;
     [SerializeField] Transform contentRoot;
     [SerializeField] ScoreBoardEntry entryPrefab;
     [SerializeField, Min(1)] int columnCount = 3;

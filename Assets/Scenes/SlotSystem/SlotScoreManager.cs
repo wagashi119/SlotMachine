@@ -8,6 +8,7 @@ public struct MatchState
     public int gatherCount;
     public int score;
     public GameObject effect;
+    public Sprite image;
     public float effectInterval;
     // 素材/音
     public MatchState(Symbol symbol, int gatherCount)
@@ -16,6 +17,7 @@ public struct MatchState
         this.score = gatherCount * symbol.score;
         this.effect = symbol.effect;
         this.effectInterval = symbol.effectInterval;
+        this.image = symbol.image;
     }
 }
 

@@ -3,28 +3,73 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine.SceneManagement;
+using WagashiTool.Types;
+using System.Collections;
 
 public class ResultManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI scoreText;
-    [SerializeField] TextMeshProUGUI matchedSymbolsText;
-    [SerializeField] List<MatchState> matchedSymbols = new List<MatchState>();
+    [SerializeField] string scoreBeforeText = "";
+    [SerializeField] string scoreAfterText = "px";
+    [SerializeField] float scoreCountDuration = 1.0f;
 
-    [ContextMenu("Set Score and Matched Symbols")]
-    private void Awake()
+    [Header("Matched Symbols")]
+    [SerializeField] Transform matchedSymbolsContainer;
+    [SerializeField] GameObject matchedSymbolPrefab;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip matchSound;
+    [SerializeField] float matchAnimationDelay = 0.5f;
+    [SerializeField] List<SerializeTuple<Sprite, int>> matchedSymbols = new List<SerializeTuple<Sprite, int>>();
+
+    private void Start()
     {
-        if (GameData.Instance != null)
+        StartCoroutine(DisplayAnimation());}
+
+     List<SerializeTuple<Sprite, int>> ConvertSlotScores(IEnumerable<MatchState> slotScores)
+    {
+        return slotScores.Select(matchState => new SerializeTuple<Sprite, int>(matchState.image, matchState.gatherCount)).ToList();
+    }
+
+    private IEnumerator DisplayAnimation()
+    {
+        var (score, slotScores) = GameData.Instance.GetScore();
+        foreach (var matchedSymbol in matchedSymbols)
         {
-            var (score, slotScores) = GameData.Instance.GetScore();
-            matchedSymbols = slotScores.ToList();
-            scoreText.text = score.ToString();
-            if (matchedSymbolsText != null)
+            GameObject symbolObj = Instantiate(matchedSymbolPrefab, matchedSymbolsContainer);
+            symbolObj.GetComponent<UnityEngine.UI.Image>().sprite = matchedSymbol.item1;
+            symbolObj.GetComponentInChildren<TextMeshProUGUI>().text = matchedSymbol.item2.ToString();
+            Debug.Log($"Displaying matched symbol: {matchedSymbol.item1.name} with count: {matchedSymbol.item2}");
+
+
+            if (audioSource != null && matchSound != null)
             {
-                Debug.Log($"Score: {score}, Matched Symbols Count: {slotScores.Count}");
-                matchedSymbolsText.text = "";
-                matchedSymbolsText.text = string.Join("\n", matchedSymbols.Select(matchState => $"Symbol: {matchState.score}, Count: {matchState.gatherCount}"));
+                audioSource.PlayOneShot(matchSound);
             }
+
+            yield return new WaitForSeconds(matchAnimationDelay);
         }
+
+        yield return StartCoroutine(ResultScoreAnimation(score));
+    }
+
+    private IEnumerator ResultScoreAnimation(int score)
+    {
+        float elapsedTime = 0;
+
+        while (elapsedTime < scoreCountDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / scoreCountDuration;
+            int currentScore = Mathf.FloorToInt(Mathf.Lerp(0, score, t));
+
+            if (scoreText != null)
+            {
+                scoreText.text = $"{scoreBeforeText}{currentScore}{scoreAfterText}";
+            }
+            yield return null;
+        }
+
+        Debug.Log($"Score: {score}");
     }
 
     public void Restart()
