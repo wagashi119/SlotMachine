@@ -17,6 +17,7 @@ public class SlotManager : MonoBehaviour
     [SerializeField] SlotRandomSelect symbolSelector;
     [SerializeField] SlotView slotView;
     [SerializeField] SlotEffect slotEffect;
+    [SerializeField] SlotScoreManager scoreManager;
     [SerializeField] ScoreBoardGenerator scoreBoardGenerator;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip rollAudioClip;
@@ -74,6 +75,15 @@ public class SlotManager : MonoBehaviour
         // スロット起動後かつ、ロール終了後
         if (slotState == SlotState.Rolling && !slotView.IsRolling)
         {
+            if (scoreManager != null)
+            {
+                scoreManager.EvaluateScore();
+            }
+            else
+            {
+                Debug.LogError("SlotManager: ScoreManager is not assigned");
+            }
+
             slotEffect.EffectStart();
             //仮でStartからResultまで動くために以下に色々書いておくのでいらなかったら消しておいてください
             remainingAttemptstxt.text = "残り" + (maxAttemptstxt - remainingAttenpts).ToString() + "回"; 
