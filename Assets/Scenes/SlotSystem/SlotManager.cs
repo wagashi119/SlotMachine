@@ -64,6 +64,16 @@ public class SlotManager : MonoBehaviour
         remainingAttenpts++;
     }
 
+    public void Stop()
+    {
+        if (slotState != SlotState.Rolling)
+        {
+            Debug.LogWarning("SlotManager: Slot is not rolling");
+            return;
+        }
+        slotView.StopReel();
+    }
+
     public void SurpriseSlotChange()
     {
         // サプライズロジックを起動

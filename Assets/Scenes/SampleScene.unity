@@ -440,7 +440,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &287250267
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1339,6 +1339,7 @@ MonoBehaviour:
   symbolSelector: {fileID: 2069879939}
   slotView: {fileID: 991734489}
   slotEffect: {fileID: 991734490}
+  scoreManager: {fileID: 2069879940}
   scoreBoardGenerator: {fileID: 1313660769}
   audioSource: {fileID: 867772813}
   rollAudioClip: {fileID: 8300000, guid: 1ff6f288d3e99f14f97f1e53ffdbe3fc, type: 3}
@@ -1476,7 +1477,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &808272572
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2236,7 +2237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1072941279
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2409,7 +2410,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 650231d86b4985247a88de0a5f724083, type: 3}
     m_FontSize: 49
     m_FontStyle: 0
     m_BestFit: 0
@@ -3492,6 +3493,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 779388205}
         m_TargetAssemblyTypeName: SlotManager, Assembly-CSharp
+        m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 779388205}
+        m_TargetAssemblyTypeName: SlotManager, Assembly-CSharp
         m_MethodName: Roll
         m_Mode: 1
         m_Arguments:
@@ -3889,6 +3902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   symbolSelector: {fileID: 2069879939}
+  slotView: {fileID: 991734489}
   totalScore: 0
   matchedSymbols: []
   verticalLineCount: 3

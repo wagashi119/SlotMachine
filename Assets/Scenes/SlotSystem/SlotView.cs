@@ -218,6 +218,27 @@ public class SlotView : MonoBehaviour
         reelStopped[reel] = true;
         ApplyReelStopped(reel);
     }
+    /// <summary>
+    /// リールを停止させる。停止するリールは降順で定められる。
+    /// </summary>
+    public void StopReel()
+    {
+        if (!isRolling) return;
+        if (!reelStopped[0]) {
+            StopReel(0);
+            return;
+        }
+        else if (!reelStopped[1])
+        {
+            StopReel(1);
+            return;
+        }
+        else if (!reelStopped[2]) {
+            StopReel(2);
+            return;
+        }
+        else if (!reelStopped[2]) StopReel(2); 
+    }
 
     int OrderFromRight(int reel) => reelCount - 1 - reel;
 
