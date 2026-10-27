@@ -6,15 +6,15 @@ public class GameData : MonoBehaviour
     public static GameData Instance;
 
     private int score = 0;
-    private IReadOnlyList<MatchState> slotScores = new List<MatchState>();
+    private List<MatchState> slotScores = new List<MatchState>();
 
     public void SetScore(int score, List<MatchState> slotScores)
     {
         this.score = score;
-        this.slotScores = slotScores;
+        this.slotScores.AddRange(slotScores);
     }
 
-    public (int, IReadOnlyList<MatchState>) GetScore()
+    public (int, List<MatchState>) GetScore()
     {
         return (score, slotScores);
     }
@@ -35,6 +35,6 @@ public class GameData : MonoBehaviour
     public void ResetScore()
     {
         score = 0;
-        slotScores = new List<MatchState>().AsReadOnly();
+        slotScores = new List<MatchState>();
     }
 }
