@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class SlotManager : MonoBehaviour
 {
-    enum SlotState {
+    enum SlotState
+    {
         Idle,
         Rolling,
         Stopping,
@@ -17,32 +18,26 @@ public class SlotManager : MonoBehaviour
     [SerializeField] SlotView slotView;
     [SerializeField] SlotEffect slotEffect;
     [SerializeField] SlotScoreManager scoreManager;
+    [SerializeField] ScoreBoardGenerator scoreBoardGenerator;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip rollAudioClip;
-    [SerializeField] int rollCount = 0;
-    [SerializeField] int maxRollCount = 10;
     [SerializeField] List<Reels> reels = new List<Reels>();
     [SerializeField] SlotState slotState = SlotState.Idle;
     Reels currentReels;
 
     public static Reels LastUsedReels { get; private set; }
-    public Reels CurrentReels => currentReels;
 
     //仮追加部分
     [SerializeField] Text remainingAttemptstxt;
-    int RemainingAttenpts { get { return remainingAttenpts; } set { 
-            remainingAttenpts = value;
-            if (remainingAttemptstxt != null)
-            {
-                remainingAttemptstxt.text = $"残り{remainingAttenpts}回";
-            }
-        } 
-    }
-    int remainingAttenpts = 10;
+    [SerializeField] int maxAttemptstxt = 10;
+    [SerializeField] int suripriseRoll = 3;
+    [SerializeField] int remainingAttenpts = 0;
 
-    public void Awake() {
+    public void Awake()
+    {
         slotState = SlotState.Idle;
-        if (slotView == null || slotEffect == null || symbolSelector == null || reels.Count == 0 || reels[0] == null) {
+        if (slotView == null || slotEffect == null || symbolSelector == null || reels.Count == 0 || reels[0] == null)
+        {
             Debug.LogError("SlotManager: SlotView, SlotEffect, SlotRandomSelect is not assigned");
             enabled = false;
             return;
@@ -51,32 +46,30 @@ public class SlotManager : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        //仮追加部分
-        //remainingAttemptstxt = GetComponent<Text>();
-
-        RemainingAttenpts = 10;
-    }
-
     public void Roll()
     {
-        if (slotState != SlotState.Idle) {
+        if (slotState != SlotState.Idle)
+        {
             Debug.LogWarning("SlotManager: Slot is not idle");
             return;
         }
         symbolSelector.Roll();
-        if (audioSource != null && rollAudioClip != null) {
+        if (audioSource != null && rollAudioClip != null)
+        {
             audioSource.PlayOneShot(rollAudioClip);
         }
         slotState = SlotState.Rolling;
-        rollCount++;
 
         //仮追加部分
-        RemainingAttenpts--;
+        remainingAttenpts++;
     }
 
-    bool ReelsChangeRoll => rollCount % maxRollCount == 0;
+    public void SurpriseSlotChange()
+    {
+        // サプライズロジックを起動
+        SetCurrentReels(reels[1]);
+    }
+
     void Update()
     {
         // スロット起動後かつ、ロール終了後
@@ -92,43 +85,42 @@ public class SlotManager : MonoBehaviour
             }
 
             slotEffect.EffectStart();
+            //仮でStartからResultまで動くために以下に色々書いておくのでいらなかったら消しておいてください
+            remainingAttemptstxt.text = "残り" + (maxAttemptstxt - remainingAttenpts).ToString() + "回"; 
             slotState = SlotState.Stopping;
         }
-        if (slotState == SlotState.Stopping && !slotEffect.Effecting) {
+        if (slotState == SlotState.Stopping && !slotEffect.Effecting)
+        {
             slotState = SlotState.Stopped;
             Debug.Log("SlotManager: Slot is stopped");
 
             // スコアを計算、追加
             // ロール回数を計算して必要に応じてリールを変更
-            if (ReelsChangeRoll) {
-                ChangeReels();
+            if (remainingAttenpts == suripriseRoll)
+            {
+                SurpriseSlotChange();
             }
+
             slotState = SlotState.Idle;
+            if (remainingAttenpts >= maxAttemptstxt)
+            {
+                SceneManager.LoadScene("Result");
+            }
         }
 
-        //仮でStartからResultまで動くために以下に色々書いておくのでいらなかったら消しておいてください
-        //remainingAttemptstxt.text = "残り回数" + remainingAttenpts.ToString(); 
-        if (RemainingAttenpts <= 0 && slotState == SlotState.Idle)
+    }
+
+    void SetCurrentReels(Reels nextReels)
+    {
+        if (nextReels == null)
         {
-            SceneManager.LoadScene("Result");
-
+            Debug.LogError("SlotManager: Next Reels is null");
+            return;
         }
 
-    }
-
-    void ChangeReels() {
-        Debug.Log("Change_Reels");
-        int reelIndex = rollCount / maxRollCount;
-        if (reelIndex >= reels.Count) {
-            reelIndex = Mathf.Min(reelIndex, reels.Count - 1);
-        }
-
-        SetCurrentReels(reels[reelIndex]);
-    }
-
-    void SetCurrentReels(Reels nextReels) {
+        LastUsedReels = currentReels;
         currentReels = nextReels;
-        LastUsedReels = nextReels;
-        symbolSelector.ChangeReels(nextReels);
+        symbolSelector.ChangeReels(currentReels);
+        scoreBoardGenerator.Generate(currentReels);
     }
 }

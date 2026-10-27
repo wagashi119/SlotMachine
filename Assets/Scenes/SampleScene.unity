@@ -833,7 +833,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 4.05
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -876,7 +876,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 5000
+  m_ColorTemperature: 2905
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -1264,14 +1264,17 @@ MonoBehaviour:
   symbolSelector: {fileID: 2069879939}
   slotView: {fileID: 991734489}
   slotEffect: {fileID: 991734490}
+  scoreBoardGenerator: {fileID: 1313660769}
   audioSource: {fileID: 867772813}
-  rollAudioClip: {fileID: 0}
-  rollCount: 0
-  maxRollCount: 10
+  rollAudioClip: {fileID: 8300000, guid: 1ff6f288d3e99f14f97f1e53ffdbe3fc, type: 3}
   reels:
   - {fileID: 11400000, guid: 06262558b9c98584aab4dfd6274955c4, type: 2}
+  - {fileID: 11400000, guid: d824e6e0588b81f45b3e21d9ac75c049, type: 2}
   slotState: 0
   remainingAttemptstxt: {fileID: 1095309305}
+  maxAttemptstxt: 10
+  suripriseRoll: 3
+  remainingAttenpts: 0
 --- !u!1 &804048010
 GameObject:
   m_ObjectHideFlags: 0
@@ -3203,7 +3206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32152b15f930494ebb58feef077fe99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
 --- !u!4 &1700223245
 Transform:
   m_ObjectHideFlags: 0
@@ -3434,7 +3436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
+  m_Color: {r: 0.93962264, g: 0.2818867, b: 0.2818867, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
