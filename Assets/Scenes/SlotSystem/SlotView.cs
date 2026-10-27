@@ -142,13 +142,14 @@ public class SlotView : MonoBehaviour
             float startAt = GetReelStartTime(reel);
             float stopAt = GetReelStopTime(reel);
 
+            // スタート前はスクロールせず
             if (rollTimer < startAt)
             {
                 allStopped = false;
                 continue;
             }
 
-            if (reelStopped[reel])
+            if (stopAt <= rollTimer && !reelStopped[reel])
             {
                 ApplyReelStopped(reel);
                 continue;
@@ -161,6 +162,7 @@ public class SlotView : MonoBehaviour
             float speed = rollStartVelo * rollVeloCurve.Evaluate(t);
 
             scrollIndex[reel] += speed * Time.deltaTime;
+            //Debug.Log($"SlotView: reel {reel} scrollIndex={scrollIndex[reel]:F2}, speed={speed:F2}, t={t:F2}");
 
             // 停止ボタンが押されていない間は回転を続ける
             ApplyReelScrolling(reel);           

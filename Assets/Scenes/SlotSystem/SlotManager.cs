@@ -43,7 +43,7 @@ public class SlotManager : MonoBehaviour
             return;
         }
         SetCurrentReels(reels[0]);
-
+        remainingAttemptstxt.text = "残り" + (maxAttemptstxt - remainingAttenpts).ToString() + "回"; 
     }
 
     public void Roll()
@@ -62,6 +62,7 @@ public class SlotManager : MonoBehaviour
 
         //仮追加部分
         remainingAttenpts++;
+        remainingAttemptstxt.text = "残り" + (maxAttemptstxt - remainingAttenpts).ToString() + "回"; 
     }
 
     public void Stop()
@@ -96,7 +97,6 @@ public class SlotManager : MonoBehaviour
 
             slotEffect.EffectStart();
             //仮でStartからResultまで動くために以下に色々書いておくのでいらなかったら消しておいてください
-            remainingAttemptstxt.text = "残り" + (maxAttemptstxt - remainingAttenpts).ToString() + "回"; 
             slotState = SlotState.Stopping;
         }
         if (slotState == SlotState.Stopping && !slotEffect.Effecting)
