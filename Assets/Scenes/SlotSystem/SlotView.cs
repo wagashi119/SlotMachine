@@ -44,6 +44,9 @@ public class SlotView : MonoBehaviour
     float[] scrollIndex;
     int[] startIndices;
     bool[] reelStopped;
+    float[] stoppedIndices;
+    public int GetStoppedSymbolIndex(int reel) => Mathf.RoundToInt(stoppedIndices[reel]);
+
 
     void Start()
     {
@@ -139,13 +142,14 @@ public class SlotView : MonoBehaviour
             float startAt = GetReelStartTime(reel);
             float stopAt = GetReelStopTime(reel);
 
+            // スタート前はスクロールせず
             if (rollTimer < startAt)
             {
                 allStopped = false;
                 continue;
             }
 
-            if (reelStopped[reel])
+            if (stopAt <= rollTimer && !reelStopped[reel])
             {
                 ApplyReelStopped(reel);
                 continue;
@@ -158,29 +162,26 @@ public class SlotView : MonoBehaviour
             float speed = rollStartVelo * rollVeloCurve.Evaluate(t);
 
             scrollIndex[reel] += speed * Time.deltaTime;
+            //Debug.Log($"SlotView: reel {reel} scrollIndex={scrollIndex[reel]:F2}, speed={speed:F2}, t={t:F2}");
 
-            int len = symbolSelector.symbols[reel].Count;
-            if (scrollIndex[reel] >= startIndices[reel] + len * 2 || rollTimer >= stopAt)
-            {
-                scrollIndex[reel] = targetIndices[reel];
-                reelStopped[reel] = true;
-                ApplyReelStopped(reel);
-                continue;
-            }
-
-            ApplyReelScrolling(reel);
+            // 停止ボタンが押されていない間は回転を続ける
+            ApplyReelScrolling(reel);           
         }
-
+        
         if (allStopped)
         {
             isRolling = false;
-            if (spinAudioSource != null) {
+
+            if (spinAudioSource != null)
+            {
                 spinAudioSource.Stop();
             }
+
+            Debug.Log("SlotView: すべてのリールが停止しました");
         }
     }
-
-    public void RollStart()
+      
+    public void RollStart() 
     {
         targetIndices = symbolSelector.GetSelectSymbolIndex();
 
@@ -189,6 +190,7 @@ public class SlotView : MonoBehaviour
         scrollIndex = new float[arrayLength];
         startIndices = new int[arrayLength];
         reelStopped = new bool[arrayLength];
+        stoppedIndices = new float[arrayLength];
 
         for (int reel = 0; reel < reelCount; reel++)
         {
@@ -205,6 +207,39 @@ public class SlotView : MonoBehaviour
             spinAudioSource.loop = true;
             spinAudioSource.Play();
         }
+    }
+    public void StopReel(int reel)
+    {
+        if (!isRolling) return;
+        if (reel < 0 || reel >= reelCount) return;
+        if (reelStopped[reel]) return;
+
+        // ★停止した瞬間の位置を記録
+        stoppedIndices[reel] = scrollIndex[reel];
+
+        reelStopped[reel] = true;
+        ApplyReelStopped(reel);
+    }
+    /// <summary>
+    /// リールを停止させる。停止するリールは降順で定められる。
+    /// </summary>
+    public void StopReel()
+    {
+        if (!isRolling) return;
+        if (!reelStopped[0]) {
+            StopReel(0);
+            return;
+        }
+        else if (!reelStopped[1])
+        {
+            StopReel(1);
+            return;
+        }
+        else if (!reelStopped[2]) {
+            StopReel(2);
+            return;
+        }
+        else if (!reelStopped[2]) StopReel(2); 
     }
 
     int OrderFromRight(int reel) => reelCount - 1 - reel;
@@ -231,11 +266,17 @@ public class SlotView : MonoBehaviour
 
     void ApplyReelStopped(int reel)
     {
-        if (audioSource != null && reelStopAudioClip != null) {
+        if (audioSource != null && reelStopAudioClip != null)
+        {
             audioSource.PlayOneShot(reelStopAudioClip);
         }
+
+        // 停止したリールの位置を整数に合わせる
+        int centerIndex = Mathf.RoundToInt(stoppedIndices[reel]);
+
+        // リールの位置を整えて図柄を表示する
         ResetReelPositions(reel);
-        ApplyReelImages(reel, targetIndices[reel]);
+        ApplyReelImages(reel, centerIndex);
     }
 
     void ResetReelPositions(int reel)

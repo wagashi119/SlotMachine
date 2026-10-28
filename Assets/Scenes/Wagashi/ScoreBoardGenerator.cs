@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class ScoreBoardGenerator : MonoBehaviour
 {
-    [SerializeField] SlotManager slotManager;
     [SerializeField] Transform contentRoot;
     [SerializeField] ScoreBoardEntry entryPrefab;
     [SerializeField, Min(1)] int columnCount = 3;
@@ -12,14 +11,7 @@ public class ScoreBoardGenerator : MonoBehaviour
     [SerializeField] Vector2 spacing = new Vector2(12f, 12f);
 
     readonly List<ScoreBoardEntry> generatedEntries = new List<ScoreBoardEntry>();
-
-    void Start()
-    {
-        Generate();
-    }
-
-    [ContextMenu("Generate Score Board")]
-    public void Generate()
+    public void Generate(Reels sourceReels)
     {
         if (contentRoot == null || entryPrefab == null)
         {
@@ -27,9 +19,6 @@ public class ScoreBoardGenerator : MonoBehaviour
             return;
         }
 
-        Reels sourceReels = slotManager != null
-            ? slotManager.CurrentReels
-            : SlotManager.LastUsedReels;
         if (sourceReels == null)
         {
             Debug.LogError("ScoreBoardGenerator: No active Reel was found on SlotManager", this);
