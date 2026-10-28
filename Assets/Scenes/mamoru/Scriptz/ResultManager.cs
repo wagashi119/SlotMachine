@@ -89,6 +89,12 @@ public class ResultManager : MonoBehaviour
 
     public void Restart()
     {
+        if (!canRestart)
+        {
+            Debug.LogWarning("ResultManager: Cannot restart yet, animation not finished.");
+            return;
+        }
+
         if (GameData.Instance != null)
         {
             GameData.Instance.ResetScore();
@@ -98,6 +104,12 @@ public class ResultManager : MonoBehaviour
     }
     public void BackToTitle()
     {
+        if (!canRestart)
+        {
+            Debug.LogWarning("ResultManager: Cannot restart yet, animation not finished.");
+            return;
+        }
+
         if (GameData.Instance != null)
         {
             GameData.Instance.ResetScore();

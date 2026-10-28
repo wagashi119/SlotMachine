@@ -26,6 +26,15 @@ public class ScoreBoardEntry : MonoBehaviour
 
         if (symbolImage != null) symbolImage.sprite = symbol.image;
         if (symbolNameText != null) symbolNameText.text = symbol.name;
-        if (scoreText != null) scoreText.text = (symbol.score * 3).ToString();
+        if (scoreText != null) 
+        {
+            scoreText.text = (symbol.score * 3).ToString();
+            scoreText.color = Color.white; // スコアの色を白に設定
+
+            if (symbol.score <= 0) // スコアが0以下の場合は赤色に変更
+            {
+                scoreText.color = Color.red;
+            }
+        }
     }
 }

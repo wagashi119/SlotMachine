@@ -1344,8 +1344,8 @@ MonoBehaviour:
   audioSource: {fileID: 867772813}
   rollAudioClip: {fileID: 8300000, guid: 1ff6f288d3e99f14f97f1e53ffdbe3fc, type: 3}
   reels:
-  - {fileID: 11400000, guid: 06262558b9c98584aab4dfd6274955c4, type: 2}
-  - {fileID: 11400000, guid: d824e6e0588b81f45b3e21d9ac75c049, type: 2}
+  - {fileID: 11400000, guid: 3a27d7323970af94c8dba50cd2c3333f, type: 2}
+  - {fileID: 11400000, guid: 3a27d7323970af94c8dba50cd2c3333f, type: 2}
   slotState: 0
   remainingAttemptstxt: {fileID: 1095309305}
   maxAttemptstxt: 10
@@ -1987,22 +1987,22 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.17419662
     - serializedVersion: 3
-      time: 0.13054845
-      value: 0.77652377
-      inSlope: 1.1550694
-      outSlope: 1.1550694
+      time: 0.14947672
+      value: 1.0010211
+      inSlope: 0.050073337
+      outSlope: 0.050073337
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.54512835
-      outWeight: 0.13653724
+      outWeight: 0.11501839
     - serializedVersion: 3
-      time: 0.74537635
-      value: 0.9944008
-      inSlope: -1.1085039
-      outSlope: -1.1085039
+      time: 0.7083211
+      value: 1.0004424
+      inSlope: 0.025387626
+      outSlope: 0.025387626
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.19115473
+      inWeight: 0.13657072
       outWeight: 0.2959655
     - serializedVersion: 3
       time: 1.0099944

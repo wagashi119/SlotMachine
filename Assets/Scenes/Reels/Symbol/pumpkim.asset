@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: e20207f1ce27fbd429358836f68c2f24, type: 3}
   effect: {fileID: 2058573737672130109, guid: ea3f963a6e173c245abe8670664314f5, type: 3}
-  score: 200
+  score: 450
   effectInterval: 0.8

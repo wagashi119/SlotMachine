@@ -149,9 +149,14 @@ public class SlotView : MonoBehaviour
                 continue;
             }
 
-            if (stopAt <= rollTimer || reelStopped[reel])
+            if (reelStopped[reel])
             {
-                ApplyReelStopped(reel);
+                continue;
+            }
+
+            if (stopAt <= rollTimer)
+            {
+                StopReel(reel);
                 continue;
             }
 
@@ -214,8 +219,8 @@ public class SlotView : MonoBehaviour
         if (reel < 0 || reel >= reelCount) return;
         if (reelStopped[reel]) return;
 
-        // ★停止した瞬間の位置を記録
-        stoppedIndices[reel] = scrollIndex[reel];
+        // Keep the symbol currently rendered at the center row.
+        stoppedIndices[reel] = Mathf.FloorToInt(scrollIndex[reel]);
         Debug.Log($"SlotView: reel {reel} stopped at scrollIndex={stoppedIndices[reel]:F2}");
 
         reelStopped[reel] = true;
