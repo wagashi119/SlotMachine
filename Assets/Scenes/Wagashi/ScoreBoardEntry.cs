@@ -26,6 +26,6 @@ public class ScoreBoardEntry : MonoBehaviour
 
         if (symbolImage != null) symbolImage.sprite = symbol.image;
         if (symbolNameText != null) symbolNameText.text = symbol.name;
-        if (scoreText != null) scoreText.text = symbol.score.ToString();
+        if (scoreText != null) scoreText.text = (symbol.score * 3).ToString();
     }
 }

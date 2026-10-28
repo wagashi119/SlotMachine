@@ -33,6 +33,9 @@ public class SlotEffect : MonoBehaviour
 
     // 再起実行
     void MatchEffect() {
+        
+        Debug.Log("MatchEffect関数が呼ばれました！");
+        Debug.Log($"slotScoresの数={slotScores.Count}, effectCount={effectCount}");
         if (slotScores.Count <= effectCount) {
             effecting = false;
             return;

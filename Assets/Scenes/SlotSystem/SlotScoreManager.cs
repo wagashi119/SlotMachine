@@ -8,6 +8,7 @@ public struct MatchState
     public int gatherCount;
     public int score;
     public GameObject effect;
+    public Sprite image;
     public float effectInterval;
     // 素材/音
     public MatchState(Symbol symbol, int gatherCount)
@@ -16,12 +17,14 @@ public struct MatchState
         this.score = gatherCount * symbol.score;
         this.effect = symbol.effect;
         this.effectInterval = symbol.effectInterval;
+        this.image = symbol.image;
     }
 }
 
 public class SlotScoreManager : MonoBehaviour
 {
     [SerializeField] SlotRandomSelect symbolSelector;
+    [SerializeField] SlotView slotView;
     [SerializeField] int totalScore = 0;
     [SerializeField] List<MatchState> matchedSymbols = new List<MatchState>();
 
@@ -64,7 +67,7 @@ public class SlotScoreManager : MonoBehaviour
     /// </summary>
     public Symbol[] GetVerticalColumn(int reelIndex)
     {
-        int center = symbolSelector.GetSelectSymbolIndex()[reelIndex];
+        int center = slotView.GetStoppedSymbolIndex(reelIndex);
         int[] offsets = BuildCenteredOffsets(verticalLineCount);
         var column = new Symbol[offsets.Length];
         for (int i = 0; i < offsets.Length; i++)
@@ -78,7 +81,10 @@ public class SlotScoreManager : MonoBehaviour
     public Symbol[] GetHorizontalRow(int verticalOffset)
     {
         int[] centers = new int[symbolSelector.slotsCount];
-        centers = symbolSelector.GetSelectSymbolIndex();
+        for (int reel = 0; reel < centers.Length; reel++)
+        {
+            centers[reel] = slotView.GetStoppedSymbolIndex(reel);
+        }
         var row = new Symbol[centers.Length];
         for (int reel = 0; reel < centers.Length; reel++)
             row[reel] = symbolSelector.GetSymbol(reel, centers[reel] + verticalOffset);
@@ -178,17 +184,19 @@ public class SlotScoreManager : MonoBehaviour
     /// </summary>
     public int EvaluateScore()
     {
+        Debug.Log("EvaluateScoreが実行されました！");
         matchedSymbols.Clear();
 
         int added = AddScoreFromHorizontalMatches();
         added += AddScoreFromVerticalMatches();
 
         totalScore += added;
+        Debug.Log($"判定終了：加点={added}, matchedSymbols数={matchedSymbols.Count}");
 
         // GameDataにスコアを保存
         if (GameData.Instance != null)
         {
-            GameData.Instance.score = totalScore;
+            GameData.Instance.SetScore(totalScore, matchedSymbols);
         }
 
         return added;
