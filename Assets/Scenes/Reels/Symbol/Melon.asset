@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6299415293bc43a554fb3a7824433, type: 3}
   m_Name: Melon
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: e9637e3541780dc45a26a1850f35a8d5, type: 3}
+  image: {fileID: 21300000, guid: 371ecd60a61c12b499990771408e7e1e, type: 3}
   effect: {fileID: 8797007798209039703, guid: 30b45d39bb5edb14ba30dd46bf4eec31, type: 3}
   score: 400
   effectInterval: 0
