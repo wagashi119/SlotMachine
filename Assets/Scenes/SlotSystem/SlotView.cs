@@ -37,7 +37,7 @@ public class SlotView : MonoBehaviour
     int verticalView;
     int centerRow;
 
-    bool isRolling;
+    [SerializeField] bool isRolling;
     public bool IsRolling => isRolling;
     float rollTimer;
     int[] targetIndices;
@@ -149,7 +149,7 @@ public class SlotView : MonoBehaviour
                 continue;
             }
 
-            if (stopAt <= rollTimer && !reelStopped[reel])
+            if (stopAt <= rollTimer || reelStopped[reel])
             {
                 ApplyReelStopped(reel);
                 continue;
@@ -216,6 +216,7 @@ public class SlotView : MonoBehaviour
 
         // ★停止した瞬間の位置を記録
         stoppedIndices[reel] = scrollIndex[reel];
+        Debug.Log($"SlotView: reel {reel} stopped at scrollIndex={stoppedIndices[reel]:F2}");
 
         reelStopped[reel] = true;
         ApplyReelStopped(reel);
@@ -273,6 +274,7 @@ public class SlotView : MonoBehaviour
 
         // 停止したリールの位置を整数に合わせる
         int centerIndex = Mathf.RoundToInt(stoppedIndices[reel]);
+        
 
         // リールの位置を整えて図柄を表示する
         ResetReelPositions(reel);
